@@ -5,8 +5,7 @@ on:
     branches:
       - master
     paths:
-      - ".github/workflows/deployStorageAccount.yml"
-      - "templates/azuredeploy.json"
+      - "triggerFile.txt"
 
 jobs:
   deploy-storage-account-template:
