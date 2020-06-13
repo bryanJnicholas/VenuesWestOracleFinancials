@@ -90,18 +90,6 @@
             }
         },
         {
-            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-            "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('fileShareStorageAccountName'), '/default/images')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('fileShareStorageAccountName'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('fileShareStorageAccountName'))]"
-            ],
-            "properties": {
-                "publicAccess": "None"
-            }
-        },
-        {
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2019-06-01",
             "name": "[concat(parameters('fileShareStorageAccountName'), '/default/gl-uploads')]",
