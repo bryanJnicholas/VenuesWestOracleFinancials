@@ -1,8 +1,7 @@
-# Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
+# Starter pipeline
 trigger:
 - master
 
@@ -19,7 +18,12 @@ steps:
     resourceGroupName: 'VW-DEV-ARG-FinancialGLUploadBN'
     location: 'Australia East'
     templateLocation: 'Linked artifact'
-    csmFile: '$(artifactsLocation)VenuesWestOracleFinancials/azuredeploy.json$(artifactsLocationSasToken)'
-    overrideParameters: '-projectName bnProjectName -linkedTemplateUri https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master/linkedStorageAccount.json'
+    csmFile: 'azuredeploy.json'
+    csmParametersFile: 'parameters.dev.json'
     deploymentMode: 'Incremental'
-    deploymentName: 'DeployPipelineTemplate'
+    deploymentName: 'bnDeployStorage'
+
+
+
+
+
