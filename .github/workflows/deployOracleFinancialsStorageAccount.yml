@@ -1,4 +1,4 @@
-name: Deploy ARM Template
+name: Deploy ARM Template OracleFinancialsStorageAccount
 
 on:
   push:
