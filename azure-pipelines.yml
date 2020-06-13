@@ -19,7 +19,7 @@ steps:
     resourceGroupName: 'VW-DEV-ARG-FinancialGLUploadBN'
     location: 'Australia East'
     templateLocation: 'Linked artifact'
-    csmFile: 'bryanJnicholas/VenuesWestOracleFinancials/azuredeploy.json'
+    csmFile: 'VenuesWestOracleFinancials/azuredeploy.json'
     overrideParameters: '-projectName bnProjectName -linkedTemplateUri https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master/linkedStorageAccount.json'
     deploymentMode: 'Incremental'
     deploymentName: 'DeployPipelineTemplate'
