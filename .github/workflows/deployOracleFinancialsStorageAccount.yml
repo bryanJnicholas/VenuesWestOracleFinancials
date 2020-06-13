@@ -1,5 +1,6 @@
 name: Deploy ARM Template Create OracleFinancialsStorageAccount
 
+
 on:
   push:
     branches:
@@ -28,5 +29,3 @@ jobs:
             --resource-group bnprojectbn \
             --template-file linkedStorageAccount.json \
             --parameters parameters.dev.json
-            
-            
