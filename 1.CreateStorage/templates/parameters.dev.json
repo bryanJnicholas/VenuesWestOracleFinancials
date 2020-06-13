@@ -6,7 +6,7 @@
             "value": "bnsysdevoraclefinancials"
         },
 		"environmentTag": {
-            "value": "Development and Test"
+            "value": "dev"
         }
     }
 }

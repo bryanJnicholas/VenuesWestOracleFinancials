@@ -6,9 +6,13 @@
 		"type": "string",
 		"defaultValue": "SetInParameterfile"
 		},
-		{
 		"environmentTag": {
 		"type": "string",
+	    "allowedValues": [
+                "prd",
+                "uat",
+                "dev"
+            ],
 		"defaultValue": "SetInParameterfile"
 		}
 	},
