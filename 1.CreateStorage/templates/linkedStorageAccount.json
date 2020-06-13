@@ -4,10 +4,10 @@
     "parameters": {
 		"fileShareStorageAccountName": {
 		"type": "string",
-		"defaultValue": "SetInParameterfile",
+		"defaultValue": "SetInParameterfile"
 		}
-	}
-    },
+	},
+  
     "variables": {},
     "resources": [
         {
