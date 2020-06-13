@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 name: Deploy ARM Template Create OracleFinancialsStorageAccount
 
+=======
+name: Deploy ARM Template OracleFinancialsStorageAccount
+>>>>>>> 3714fcd4f4a1fe623135c14d27b1c1059db2b6e2
 
 on:
   push:
@@ -27,5 +31,11 @@ jobs:
           inlineScript: |
             az deployment group create \
             --resource-group bnprojectbn \
+<<<<<<< HEAD
             --template-file linkedStorageAccount.json \
             --parameters parameters.dev.json
+=======
+            --template-file ./linkedStorageAccount.json \
+            --parameters ./parameters.dev.json
+            
+>>>>>>> 3714fcd4f4a1fe623135c14d27b1c1059db2b6e2
