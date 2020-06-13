@@ -25,4 +25,4 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az deployment group create --resource-group bnprojectbn --template-file ./templates/azuredeploy.json
+            az deployment group create --resource-group bnprojectbn --template-file ./1.CreateStorage/templates/azuredeploy.json
