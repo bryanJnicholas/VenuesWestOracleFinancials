@@ -3,7 +3,7 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
         "fileShareStorageAccountName": {
-            "defaultValue": "notSet",
+            "defaultValue": "notSetx",
             "type": "String"
         },
 		"location": {
