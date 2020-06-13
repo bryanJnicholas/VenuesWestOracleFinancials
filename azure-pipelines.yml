@@ -16,7 +16,7 @@ steps:
     azureResourceManagerConnection: 'FinancialsGLUploadServiceAzureRmPipeline'
     subscriptionId: 'cbd62ea6-dd40-4f50-9260-082f4ceced1e'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'VW-DEV-ARG-FinancialGLUpload'
+    resourceGroupName: 'VW-DEV-ARG-FinancialGLUploadBN'
     location: 'Australia East'
     templateLocation: 'Linked artifact'
     csmFile: 'VenuesWestOracleFinancials\azuredeploy.json'
