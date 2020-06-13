@@ -24,15 +24,7 @@
 		"properties": {
 			"mode": "Incremental",
 			"templateLink": {
-				"uri": "https://bndeploymentrcdemo.blob.core.windows.net/bntemplates/fileShareStorage.json"
-			},
-			"parameters": {
-				"storageAccountName": {
-					"value": "[parameters('fileShareStorageAccountName')]"
-				},
-				"location": {
-					"value": "[parameters('location')]"
-				}
+				"uri": "https://github.com/bryanJnicholas/VenuesWestOracleFinancials/blob/master/linkedStorageAccount.json"
 			}
 		}
 	}],
