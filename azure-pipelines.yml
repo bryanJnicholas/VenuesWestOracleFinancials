@@ -20,6 +20,6 @@ steps:
     location: 'Australia East'
     templateLocation: 'Linked artifact'
     csmFile: 'VenuesWestOracleFinancials\azuredeploy.json'
-    overrideParameters: '-projectName [EnterAProjectName] -linkedTemplateUri [EnterTheLinkedTemplateURL]'
+    overrideParameters: '-projectName bnProjectName -linkedTemplateUri https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master/linkedStorageAccount.json'
     deploymentMode: 'Incremental'
     deploymentName: 'DeployPipelineTemplate'
