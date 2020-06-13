@@ -5,6 +5,11 @@
 		"fileShareStorageAccountName": {
 		"type": "string",
 		"defaultValue": "SetInParameterfile"
+		},
+		{
+		"environmentTag": {
+		"type": "string",
+		"defaultValue": "SetInParameterfile"
 		}
 	},
   
@@ -16,7 +21,7 @@
             "name": "[parameters('fileShareStorageAccountName')]",
             "location": "australiaeast",
             "tags": {
-                "Environment": "Development and Test"
+                "Environment": "[parameters('environmentTag')]"
             },
             "sku": {
                 "name": "Standard_LRS",

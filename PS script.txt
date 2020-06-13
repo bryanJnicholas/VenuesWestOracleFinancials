@@ -21,4 +21,27 @@ $appName="http://${projectName}"
 $scope=$(az group create --name $resourceGroupName --location $location --query 'id')
 az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sdk-auth
 
-#2 Store 
+Returns:
+{
+  "clientId": "f0d38bea-757f-4a67-956f-19e9035fdcad",
+  "clientSecret": "Tb3Pn.uM.4_uAVZHwCJ5nr~c3P8GxHI5Wc",
+  "subscriptionId": "cbd62ea6-dd40-4f50-9260-082f4ceced1e",
+  "tenantId": "f8b399f7-18b7-448f-ae4e-720e0347caf3",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+
+#2 Store Secret in GitHub
+From your GitHub repository, select the Settings tab.
+
+Select Secrets from the left menu.
+
+Enter the following values:
+
+Name: AZURE_CREDENTIALS
+Value: (Paste the JSON output)
+Select Add secret.

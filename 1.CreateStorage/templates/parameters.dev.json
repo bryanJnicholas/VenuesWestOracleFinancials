@@ -4,6 +4,9 @@
     "parameters": {
         "fileShareStorageAccountName": {
             "value": "bnsysdevoraclefinancials"
+        },
+		"environmentTag": {
+            "value": "Development and Test"
         }
     }
 }
