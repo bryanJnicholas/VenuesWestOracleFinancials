@@ -31,11 +31,6 @@ jobs:
           inlineScript: |
             az deployment group create \
             --resource-group bnprojectbn \
-<<<<<<< HEAD
-            --template-file linkedStorageAccount.json \
-            --parameters parameters.dev.json
-=======
-            --template-file ./linkedStorageAccount.json \
-            --parameters ./parameters.dev.json
-            
->>>>>>> 3714fcd4f4a1fe623135c14d27b1c1059db2b6e2
+            --template-file ./1.CreateStorage/templates/linkedStorageAccount.json \
+            --parameters ./1.CreateStorage/templates/parameters.dev.json
+
