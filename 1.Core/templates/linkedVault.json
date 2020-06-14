@@ -38,6 +38,7 @@
                 },
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
+				"tenantId": "[subscription().tenantId]",
                 "enabledForTemplateDeployment": true
             }
         },
