@@ -58,9 +58,9 @@
 				},
 			"parameters": 
 				{
-				"fileShareStorageAccountName": 
+				"vaults_VW_SYD_DEV_KV_INTMW_name": 
 					{
-					"value": "[parameters('fileShareStorageAccountName')]"
+					"value": "[parameters('vaults_VW_SYD_DEV_KV_INTMW_name')]"
 					},
 				"environmentTag": 
 					{
