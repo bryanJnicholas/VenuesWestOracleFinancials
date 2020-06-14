@@ -10,7 +10,9 @@
         }
   },
 "variables": {
-        "storageAccountTemplateLink": "[uri(deployment().properties.templateLink.uri,'templates/linkedStorageAccount.json')]"
+        "templateBaseURL": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master",
+	"storageAccountTemplateLink": "[https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master/1.Core/templates/linkedStorageAccount.json"
+
     },
   "resources": [
     {
