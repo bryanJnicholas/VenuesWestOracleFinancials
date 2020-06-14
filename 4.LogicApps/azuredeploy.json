@@ -13,8 +13,13 @@
 	},
 	"variables": {
 		"FinanceGLImportOperationsTemplateLink": "[concat(parameters('templateBaseURL'),'/4.LogicApps/templates/linkedLogicAppFinanceGLImportOperations.json')]",
-		"vaultTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedVault.json')]"
-
+		"vaultTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedVault.json')]",
+		"workflows_OracleFusionImportOperations_externalid": {"value":
+		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Logic/workflows/OracleFusionImportOperations')]"},
+		"connections_azurefile_externalid": {"value": 	
+		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Web/connections/azurefile)]"},
+		"connections_office365_externalid": {"value": 
+		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Web/connections/office365)]"}	  
 	},
 	"resources": 
 		[
@@ -33,9 +38,9 @@
 			"parameters": 
 				{
 				"workflows_FinanceGLImportOperations_name":	{"value": "[parameters('workflows_FinanceGLImportOperations_name')]"},
-				"workflows_OracleFusionImportOperations_externalid":	{"value": "[parameters('workflows_OracleFusionImportOperations_externalid')]"},			
-				"connections_azurefile_externalid":	{"value": "[parameters('connections_azurefile_externalid')]"},				
-				"connections_office365_externalid":	{"value": "[parameters('connections_office365_externalid')]"},
+				"workflows_OracleFusionImportOperations_externalid":	{"value": "[variables('workflows_OracleFusionImportOperations_externalid')]"},			
+				"connections_azurefile_externalid":	{"value": "[variables('connections_azurefile_externalid')]"},				
+				"connections_office365_externalid":	{"value": "[variables('connections_office365_externalid')]"},
 				"environmentTag": {"value": "[parameters('environmentTag')]"}
 				}
 			}

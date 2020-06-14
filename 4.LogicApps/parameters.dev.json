@@ -5,12 +5,9 @@
         "subscriptionID": {"value": "cbd62ea6-dd40-4f50-9260-082f4ceced1e"},
         "resourceGroup": {"value": "bnprojectbn"},
 		"workflows_FinanceGLImportOperations_name": {"value": "FinanceGLImportOperations"},
-		"workflows_OracleFusionImportOperations_externalid": {"value":
-		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Logic/workflows/OracleFusionImportOperations')]"},
-		"connections_azurefile_externalid": {"value": 
-		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Web/connections/azurefile)]"},
-		"connections_office365_externalid": {"value": 
-		  "[concat('/subscriptions/',parameters('subscriptionID'),'/resourceGroups/',parameters('resourceGroup'),'/providers/Microsoft.Web/connections/office365)]"},
+		"workflows_OracleFusionImportOperations_externalid": {"type": "string"},
+		"connections_azurefile_externalid": {"type": "string"},
+		"connections_office365_externalid": {"type": "string"},
 		"environmentTag": {"value": "dev"},
 		"templateBaseURL": {"value": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master"}
     }
