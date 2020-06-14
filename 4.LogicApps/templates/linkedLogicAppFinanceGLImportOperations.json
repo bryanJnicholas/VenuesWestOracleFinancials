@@ -11,18 +11,21 @@
             "type": "String"
         },
         "connections_azurefile_externalid": {
-            "defaultValue": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/resourceGroups/VW-DEV-ARG-FinancialGLUpload/providers/Microsoft.Web/connections/azurefile",
+            "defaultValue": "/subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Web/connections/azurefile",
             "type": "String"
         },
         "connections_office365_externalid": {
-            "defaultValue": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/resourceGroups/VW-DEV-ARG-FinancialGLUpload/providers/Microsoft.Web/connections/office365",
+            "defaultValue": "/subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Web/connections/office365",
             "type": "String"
         },
 		
         "workflows_OracleFusionImportOperations_name": {
             "defaultValue": "FinanceGLImportOperations",
             "type": "String"
-        }		
+        },
+        "environmentTag": {
+            "type": "String"
+        }	
     },
     "variables": {},
     "resources": [
