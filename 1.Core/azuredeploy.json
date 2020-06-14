@@ -4,7 +4,10 @@
   "parameters": {
     "fileShareStorageAccountName": {
       "type": "string"
-    }
+    },
+	"environmentTag": {
+       "type": "string"
+        }
   },
 "variables": {
         "storageAccountTemplateLink": "[uri(deployment().properties.templateLink.uri, 'templates/linkedStorageAccount.json')]"
