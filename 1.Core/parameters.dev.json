@@ -2,24 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "fileShareStorageAccountName": {
-            "value": "bnsysdevoraclefinancials"
-        },
-		"vaults_VW_SYD_DEV_KV_INTMW_name": {
-            "value": "BN-SYD-DEV-KV-INTMW"
-        },
-		"location": 
-		{
-			"value": "australiaeast"
-		},
-		"apiManagementServiceName": {
-			"value": "VW-SYD-DEV-APIM-AIS"
-		},
-		"environmentTag": {
-            "value": "dev"
-        },
-		"templateBaseURL": {
-            "value": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master"
-        }
+        "fileShareStorageAccountName": {"value": "bnsysdevoraclefinancials"},
+		"vaults_VW_SYD_DEV_KV_INTMW_name": {"value": "BN-SYD-DEV-KV-INTMW"},
+		"location":{"value": "australiaeast"},
+		"apiManagementServiceName": {"value": "VW-SYD-DEV-APIM-AIS"},
+		"environmentTag": {"value": "dev"},
+		"templateBaseURL": {"value": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master"}
     }
 }

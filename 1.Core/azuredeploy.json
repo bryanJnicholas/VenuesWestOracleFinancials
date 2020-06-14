@@ -2,18 +2,12 @@
 	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"fileShareStorageAccountName": {
-			"type": "string"
-		},
-		"vaults_VW_SYD_DEV_KV_INTMW_name": {
-			"type": "string"
-		},
-		"environmentTag": {
-			"type": "string"
-		},
-		"templateBaseURL": {
-			"type": "string"
-		}
+		"fileShareStorageAccountName": {"type": "string"},
+		"vaults_VW_SYD_DEV_KV_INTMW_name": {"type": "string"},
+		"location":{"type": "string"},
+		"apiManagementServiceName": {"type": "string"},
+		"environmentTag": {"type": "string"},
+		"templateBaseURL": {"type": "string"}
 	},
 	"variables": {
 		"storageAccountTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedStorageAccount.json')]",
@@ -35,15 +29,8 @@
 				"contentVersion": "1.0.0.0"
 				},
 			"parameters": 
-				{
-				"fileShareStorageAccountName": 
-					{
-					"value": "[parameters('fileShareStorageAccountName')]"
-					},
-				"environmentTag": 
-					{
-					"value": "[parameters('environmentTag')]"
-					}
+				{"fileShareStorageAccountName":	{"value": "[parameters('fileShareStorageAccountName')]"},
+				"environmentTag": {"value": "[parameters('environmentTag')]"}
 				}
 			}
 		},
@@ -60,15 +47,8 @@
 				"contentVersion": "1.0.0.0"
 				},
 			"parameters": 
-				{
-				"vaults_VW_SYD_DEV_KV_INTMW_name": 
-					{
-					"value": "[parameters('vaults_VW_SYD_DEV_KV_INTMW_name')]"
-					},
-				"environmentTag": 
-					{
-					"value": "[parameters('environmentTag')]"
-					}
+				{"vaults_VW_SYD_DEV_KV_INTMW_name":{"value": "[parameters('vaults_VW_SYD_DEV_KV_INTMW_name')]"},
+				"environmentTag": {"value": "[parameters('environmentTag')]"}
 				}
 			}
 		}
