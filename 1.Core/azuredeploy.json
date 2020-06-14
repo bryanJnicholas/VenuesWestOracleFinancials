@@ -5,6 +5,9 @@
 		"fileShareStorageAccountName": {
 			"type": "string"
 		},
+		"vaults_VW_SYD_DEV_KV_INTMW_name": {
+			"type": "string"
+		},
 		"environmentTag": {
 			"type": "string"
 		},
