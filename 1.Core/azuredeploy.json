@@ -13,29 +13,62 @@
 		}
 	},
 	"variables": {
-		"storageAccountTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedStorageAccount.json')]"
+		"storageAccountTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedStorageAccount.json')]",
+		"vaultTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedVault.json')]"
 
 	},
-	"resources": [{
+	"resources": 
+		[
+		{
 		"name": "storageAccountTemplate",
 		"apiVersion": "2019-10-01",
 		"type": "Microsoft.Resources/deployments",
-		"properties": {
+		"properties": 
+			{
 			"mode": "Incremental",
-			"templateLink": {
+			"templateLink": 
+				{
 				"uri": "[variables('storageAccountTemplateLink')]",
 				"contentVersion": "1.0.0.0"
-			},
-			"parameters": {
-				"fileShareStorageAccountName": {
-					"value": "[parameters('fileShareStorageAccountName')]"
 				},
-				"environmentTag": {
+			"parameters": 
+				{
+				"fileShareStorageAccountName": 
+					{
+					"value": "[parameters('fileShareStorageAccountName')]"
+					},
+				"environmentTag": 
+					{
 					"value": "[parameters('environmentTag')]"
+					}
 				}
-
+			}
+		},
+		{
+		"name": "vaultTemplate",
+		"apiVersion": "2019-10-01",
+		"type": "Microsoft.Resources/deployments",
+		"properties": 
+			{
+			"mode": "Incremental",
+			"templateLink": 
+				{
+				"uri": "[variables('vaultTemplateLink')]",
+				"contentVersion": "1.0.0.0"
+				},
+			"parameters": 
+				{
+				"fileShareStorageAccountName": 
+					{
+					"value": "[parameters('fileShareStorageAccountName')]"
+					},
+				"environmentTag": 
+					{
+					"value": "[parameters('environmentTag')]"
+					}
+				}
 			}
 		}
-	}],
+		],
 	"outputs": {}
 }
