@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - "triggerFile.txt"
+      - "triggerFile.txtZ"
 
 jobs:
   deploy-storage-account-template:
