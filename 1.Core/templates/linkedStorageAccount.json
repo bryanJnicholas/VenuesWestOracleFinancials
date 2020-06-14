@@ -13,7 +13,7 @@
                 "uat",
                 "dev"
             ],
-		"defaultValue": "SetInParameterfile"
+		"defaultValue": "dev"
 		}
 	},
   
