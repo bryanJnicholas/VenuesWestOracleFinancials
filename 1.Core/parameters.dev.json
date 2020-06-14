@@ -3,22 +3,6 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "fileShareStorageAccountName": {"value": "bnsysdevoraclefinancials"},
-		"vaults_VW_SYD_DEV_KV_INTMW_name": {"value": "BN-SYD-DEV-KV-INTMW"},
-		"objectId": {"value": "GEN-AZUREAD-OBJECTID"},
-		"secretsObject": {
-			"value": {
-				"secrets": [
-					{
-					"secretName": "exampleSecret1",
-					"secretValue": "secretVaule1"
-					},
-					{
-					"secretName": "exampleSecret2",
-					"secretValue": "secretValue2"
-					}
-					]		
-					}
-				},
 		"location":{"value": "australiaeast"},
 		"apiManagementServiceName": {"value": "VW-SYD-DEV-APIM-AIS"},
 		"environmentTag": {"value": "dev"},
