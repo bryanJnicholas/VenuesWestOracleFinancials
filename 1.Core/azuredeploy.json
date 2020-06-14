@@ -15,7 +15,7 @@
 "variables": {
 	"storageAccountTemplateLink": "[concat(parameters('templateBaseURL')),'/1.Core/templates/linkedStorageAccount.json']"
 
-    },
+    }
   "resources": [
     {
       "name": "storageAccountTemplate",
