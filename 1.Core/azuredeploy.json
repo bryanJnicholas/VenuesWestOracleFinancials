@@ -10,7 +10,7 @@
         }
   },
 "variables": {
-        "storageAccountTemplateLink": "[uri(deployment().properties.templateLink.uri, 'templates/linkedStorageAccount.json')]"
+        "storageAccountTemplateLink": "[uri(deployment().properties.templateLink.uri,'templates/linkedStorageAccount.json')]"
     },
   "resources": [
     {
