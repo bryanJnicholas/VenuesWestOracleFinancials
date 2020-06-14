@@ -28,5 +28,5 @@ jobs:
           inlineScript: |
             az deployment group create \
             --resource-group bnprojectbn \
-            --template-file .1.Core/azuredeploy.json \
+            --template-file ./1.Core/azuredeploy.json \
             --parameters ./1.Core/parameters.dev.json
