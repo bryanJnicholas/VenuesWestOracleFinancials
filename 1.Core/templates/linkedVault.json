@@ -39,7 +39,19 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
 				"tenantId": "[subscription().tenantId]",
-                "enabledForTemplateDeployment": true
+                "enabledForTemplateDeployment": true,
+				"accessPolicies": [
+					{
+					"tenantId": "[parameters('tenantId')]",
+					"objectId": "[parameters('objectId')]",
+					"permissions": {
+						"keys": "[parameters('keysPermissions')]",
+						"secrets": "[parameters('secretsPermissions')]",
+						"certificates": "[parameters('certificatesPermissions')]",
+						"storage": "[parameters('storagePermissions')]"
+						}
+					}
+				]
             }
         },
         {

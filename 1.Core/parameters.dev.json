@@ -8,6 +8,13 @@
 		"vaults_VW_SYD_DEV_KV_INTMW_name": {
             "value": "BN-SYD-DEV-KV-INTMW"
         },
+		"location": 
+		{
+			"value": "australiaeast"
+		},
+		"apiManagementServiceName": {
+			"value": "VW-SYD-DEV-APIM-AIS"
+		},
 		"environmentTag": {
             "value": "dev"
         },
