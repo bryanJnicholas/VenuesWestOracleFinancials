@@ -24,7 +24,7 @@ az ad sp create-for-rbac --name $appName --role Contributor --scopes $scope --sd
 Returns:
 {
   "clientId": "f0d38bea-757f-4a67-956f-19e9035fdcad",
-  "clientSecret": "Tb3Pn.uM.4_uAVZHwCJ5nr~c3P8GxHI5Wc",
+  "clientSecret": "nBnk5_mtS9XmyFUkSVKUiqy5~m95CAI4O8",
   "subscriptionId": "cbd62ea6-dd40-4f50-9260-082f4ceced1e",
   "tenantId": "f8b399f7-18b7-448f-ae4e-720e0347caf3",
   "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
