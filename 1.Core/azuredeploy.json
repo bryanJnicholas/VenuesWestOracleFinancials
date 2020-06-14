@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "fileShareStorageAccountName": {
+      "type": "string"
+    }
+  },
+"variables": {
+        "storageAccountTemplateLink": "[uri(deployment().properties.templateLink.uri, 'templates/linkedStorageAccount.json')]"
+    },
+  "resources": [
+    {
+      "name": "storageAccountTemplate",
+      "apiVersion": "2019-10-01",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('storageAccountTemplateLink')]",
+          "contentVersion": "1.0.0.0"
+          },
+		  "parameters": {
+                        } 
+		}					
+     }
+  ],
+    "outputs": {
+    }
+}
