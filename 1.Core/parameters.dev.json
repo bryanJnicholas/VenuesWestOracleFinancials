@@ -7,6 +7,9 @@
         },
 		"environmentTag": {
             "value": "dev"
+        },
+		"templateBaseURL": {
+            "value": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master"
         }
     }
 }
