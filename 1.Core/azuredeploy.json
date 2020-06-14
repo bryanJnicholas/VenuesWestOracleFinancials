@@ -11,7 +11,7 @@
   },
 "variables": {
     "templateBaseURL": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master",
-	"storageAccountTemplateLink": "[concat(variables('templateBaseURL'),'/1.Core/templates/linkedStorageAccount.json']"
+	"storageAccountTemplateLink": "[concat(variables('templateBaseURL')),'/1.Core/templates/linkedStorageAccount.json']"
 
     },
   "resources": [
