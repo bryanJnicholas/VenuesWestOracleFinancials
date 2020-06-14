@@ -1,0 +1,523 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_FinanceGLImportOperations_name": {
+            "defaultValue": "FinanceGLImportOperations",
+            "type": "String"
+        },
+        "workflows_OracleFusionImportOperations_externalid": {
+            "defaultValue": "/subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/workflows/OracleFusionImportOperations",
+            "type": "String"
+        },
+        "connections_azurefile_externalid": {
+            "defaultValue": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/resourceGroups/VW-DEV-ARG-FinancialGLUpload/providers/Microsoft.Web/connections/azurefile",
+            "type": "String"
+        },
+        "connections_office365_externalid": {
+            "defaultValue": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/resourceGroups/VW-DEV-ARG-FinancialGLUpload/providers/Microsoft.Web/connections/office365",
+            "type": "String"
+        },
+		
+        "workflows_OracleFusionImportOperations_name": {
+            "defaultValue": "FinanceGLImportOperations",
+            "type": "String"
+        }		
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_FinanceGLImportOperations_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "Environment": "Development and Test",
+                "displayName": "LogicApp"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+                        "cCallbackURL": {
+                            "defaultValue": "https://api-dev.venueswest.wa.gov.au/external/oracleFusionFinance/v1/fusionCallback",
+                            "type": "String"
+                        },
+                        "cEmailImageURL": {
+                            "defaultValue": "https://vw-webapp.azurewebsites.net/VW-Integration/VW_Integration.jpg",
+                            "type": "String"
+                        },
+                        "cEnvironment": {
+                            "defaultValue": "DEV",
+                            "type": "String"
+                        },
+                        "cFinanceTeamEmailAddress": {
+                            "defaultValue": "bryan.nicholas@asggroup.com.au;Moizuddin.Syed@venueswest.wa.gov.au",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "oracleFormattedFileName": {
+                                            "type": "string"
+                                        },
+                                        "oracleFormattedFilePathFileName": {
+                                            "type": "string"
+                                        },
+                                        "originatingSource": {
+                                            "type": "string"
+                                        },
+                                        "processedFolderURL": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Initialize_variable_emailBody": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "emailBodyHeaderImage",
+                                        "type": "string",
+                                        "value": "<img src=\"@{parameters('cEmailImageURL')}\">\n<h1>GL Journal Integration Message</h1>"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_emailBodyH2Failure": {
+                            "runAfter": {
+                                "Initialize_variable_emailBodyH2Success": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "emailBodyH2Failure",
+                                        "type": "string",
+                                        "value": "<h2><span style=\"color: #ff0000;\">Request Failed!</span></h2>"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_emailBodyH2Success": {
+                            "runAfter": {
+                                "Initialize_variable_emailBody": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "emailBodyH2Success",
+                                        "type": "string",
+                                        "value": "<h2><span style=\"color: #00ff00;\">Request was Successful</span></span></span></h2>"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_runIdentifier": {
+                            "runAfter": {
+                                "Initialize_variable_emailBodyH2Failure": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "runIdentitifer",
+                                        "type": "string",
+                                        "value": "@{workflow().run.name}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_variable_vParameterList": {
+                            "runAfter": {
+                                "Initialize_variable_runIdentifier": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "vParameterList",
+                                        "type": "string",
+                                        "value": "NULL"
+                                    }
+                                ]
+                            }
+                        },
+                        "Scope_Global_Error_Handler": {
+                            "actions": {
+                                "Response_for_Error": {
+                                    "runAfter": {},
+                                    "type": "Response",
+                                    "kind": "Http",
+                                    "inputs": {
+                                        "body": {
+                                            "filename": "@triggerBody()?['oracleFormattedFileName']",
+                                            "path": "@triggerBody()?['oracleFormattedFilePathFileName']",
+                                            "source": "@triggerBody()?['originatingSource']",
+                                            "status": "Failure"
+                                        },
+                                        "statusCode": 500
+                                    }
+                                },
+                                "Send_an_email_(V2)": {
+                                    "runAfter": {
+                                        "Response_for_Error": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "Body": "<p>@{variables('emailBodyHeaderImage')}<br>\n@{variables('emailBodyH2Failure')}<br>\nA System Error was encountered processing the Journal.<br>\n<br>\nFilename : @{triggerBody()?['oracleFormattedFilePathFileName']}<br>\nWorkflow Name : @{workflow().name}<br>\nIdentifier for workflow to review the process flow is : @{variables('runIdentitifer')}<br>\n</p>",
+                                            "Importance": "High",
+                                            "Subject": "@{triggerBody()?['originatingSource']} Journal Upload FATAL Error (@{parameters('cEnvironment')} )",
+                                            "To": "@parameters('cFinanceTeamEmailAddress')"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['office365']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/v2/Mail"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Scope_Main_Process": [
+                                    "Failed",
+                                    "TimedOut"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Scope_Main_Process": {
+                            "actions": {
+                                "Scope_File_Not_Found": {
+                                    "actions": {
+                                        "Response_2": {
+                                            "runAfter": {
+                                                "Send_an_email_File_Not_Found_": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Response",
+                                            "kind": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "filename": "@triggerBody()?['oracleFormattedFileName']",
+                                                    "path": "@triggerBody()?['oracleFormattedFilePathFileName']",
+                                                    "source": "@triggerBody()?['originatingSource']",
+                                                    "status": "Failure : File Not Found"
+                                                },
+                                                "statusCode": 400
+                                            }
+                                        },
+                                        "Send_an_email_File_Not_Found_": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>@{variables('emailBodyHeaderImage')}<br>\n@{variables('emailBodyH2Failure')}<br>\n<br>\nThe file to be processed could not be located.<br>\n<br>\nFilename: @{triggerBody()?['oracleFormattedFilePathFileName']}<br>\nWorkflow Name: @{workflow().name}<br>\nIdentifier for workflow to review the process flow is : @{variables('runIdentitifer')}</p>",
+                                                    "Subject": "@{triggerBody()?['originatingSource']} Journal Upload Failed: File Does Not Exist (@{parameters('cEnvironment')}) - @{triggerBody()?['oracleFormattedFileName']}",
+                                                    "To": "@parameters('cFinanceTeamEmailAddress')"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        },
+                                        "Terminate": {
+                                            "runAfter": {
+                                                "Response_2": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Terminate",
+                                            "inputs": {
+                                                "runStatus": "Failed"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Scope_Get_File": [
+                                            "Failed",
+                                            "Skipped",
+                                            "TimedOut"
+                                        ]
+                                    },
+                                    "type": "Scope"
+                                },
+                                "Scope_Get_File": {
+                                    "actions": {
+                                        "Compose_ParameterList": {
+                                            "runAfter": {},
+                                            "type": "Compose",
+                                            "inputs": "VenuesWest Ledger,@{triggerBody()?['originatingSource']},VenuesWest Ledger,ALL,N,N,N"
+                                        },
+                                        "Compose_base64_Encoded_Doc_Content": {
+                                            "runAfter": {
+                                                "Get_file_content_using_path": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Compose",
+                                            "inputs": "@base64(body('Get_file_content_using_path'))"
+                                        },
+                                        "Get_file_content_using_path": {
+                                            "runAfter": {
+                                                "Compose_ParameterList": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "get",
+                                                "path": "/datasets/default/GetFileContentByPath",
+                                                "queries": {
+                                                    "inferContentType": true,
+                                                    "path": "@triggerBody()?['oracleFormattedFilePathFileName']",
+                                                    "queryParametersSingleEncoded": true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "type": "Scope"
+                                },
+                                "Scope_Move_File_Failed": {
+                                    "actions": {
+                                        "Response_": {
+                                            "runAfter": {},
+                                            "type": "Response",
+                                            "kind": "Http",
+                                            "inputs": {
+                                                "body": {
+                                                    "archive Folder": "@triggerBody()?['processedFolderURL']",
+                                                    "filename": "@triggerBody()?['oracleFormattedFileName']",
+                                                    "path": "@triggerBody()?['oracleFormattedFilePathFileName']",
+                                                    "source": "@triggerBody()?['originatingSource']",
+                                                    "status": "Failure : File was processed. However, move to archive folder failed"
+                                                },
+                                                "statusCode": 400
+                                            }
+                                        },
+                                        "Send_an_email_Archive_Folder_Not_Found": {
+                                            "runAfter": {
+                                                "Response_": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": {
+                                                    "Body": "<p>@{variables('emailBodyHeaderImage')}<br>\n@{variables('emailBodyH2Failure')}<br>\n<br>\nFailed moving file to Archive Folder.<br>\n<br>\n<span style=\"color: rgb(40,50,78)\">A copy of the submitted file to the archive folder could not be achieved as the archive folder could not be located.<br>\nNote: the file was successfully submitted to Oracle Fusion for processing. Another email notification will be provided shortly to confirm the success of the upload to Fusion.<br>\n<br>\nPlease ensure the archive folder has been created and is accessible to the integration server.</span><span style=\"color: rgb(0,0,0)\"><br>\n<br>\nWorkflow Name: </span><span style=\"color: rgb(0,0,0)\">@{workflow().name}</span><span style=\"color: rgb(0,0,0)\"><br>\nArchive Folder : </span><span style=\"color: rgb(0,0,0)\">@{triggerBody()?['processedFolderURL']}</span><span style=\"color: rgb(0,0,0)\"><br>\nIdentifier for workflow to review the process flow is : </span><span style=\"color: rgb(0,0,0)\">@{variables('runIdentitifer')}</span><span style=\"color: rgb(0,0,0)\"></span></p>",
+                                                    "Subject": "@{triggerBody()?['originatingSource']} Journal Upload failed when moving file to Archive Folder (@{parameters('cEnvironment')}) - @{triggerBody()?['oracleFormattedFileName']}",
+                                                    "To": "@parameters('cFinanceTeamEmailAddress')"
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/v2/Mail"
+                                            }
+                                        },
+                                        "Terminate_2": {
+                                            "runAfter": {
+                                                "Send_an_email_Archive_Folder_Not_Found": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Terminate",
+                                            "inputs": {
+                                                "runStatus": "Failed"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Scope_Move_File_to_Processed_Folder": [
+                                            "Failed",
+                                            "TimedOut"
+                                        ]
+                                    },
+                                    "type": "Scope"
+                                },
+                                "Scope_Move_File_to_Processed_Folder": {
+                                    "actions": {
+                                        "Create_Archive_file_in_Proceesed_Folder": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "body": "@body('Get_file_content_using_path')",
+                                                "headers": {
+                                                    "ReadFileMetadataFromServer": true
+                                                },
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "post",
+                                                "path": "/datasets/default/files",
+                                                "queries": {
+                                                    "folderPath": "@triggerBody()?['processedFolderURL']",
+                                                    "name": "@triggerBody()?['oracleFormattedFileName']",
+                                                    "queryParametersSingleEncoded": true
+                                                }
+                                            },
+                                            "runtimeConfiguration": {
+                                                "contentTransfer": {
+                                                    "transferMode": "Chunked"
+                                                }
+                                            }
+                                        },
+                                        "Delete_file": {
+                                            "runAfter": {
+                                                "Create_Archive_file_in_Proceesed_Folder": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                                "host": {
+                                                    "connection": {
+                                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                                    }
+                                                },
+                                                "method": "delete",
+                                                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent(triggerBody()?['oracleFormattedFilePathFileName']))}"
+                                            }
+                                        },
+                                        "Response": {
+                                            "runAfter": {
+                                                "Delete_file": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Response",
+                                            "kind": "Http",
+                                            "inputs": {
+                                                "body": "@body('OracleFusionImportOperations')",
+                                                "statusCode": 200
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Scope_Upload_File_to_Oracle_Fusion": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Scope"
+                                },
+                                "Scope_Upload_File_to_Oracle_Fusion": {
+                                    "actions": {
+                                        "OracleFusionImportOperations": {
+                                            "runAfter": {},
+                                            "type": "Workflow",
+                                            "inputs": {
+                                                "body": {
+                                                    "CallbackURL": "@parameters('cCallbackURL')",
+                                                    "ContentType": "csv",
+                                                    "DocumentContent": "@{outputs('Compose_base64_Encoded_Doc_Content')}",
+                                                    "FileName": "@triggerBody()?['oracleFormattedFilePathFileName']",
+                                                    "JobName": "oracle/apps/ess/financials/generalLedger/programs/common,JournalImportLauncher",
+                                                    "NotificationCode": "30",
+                                                    "OperationName": "importBulkData",
+                                                    "ParameterList": "@{outputs('Compose_ParameterList')}"
+                                                },
+                                                "host": {
+                                                    "triggerName": "manual",
+                                                    "workflow": {
+                                                        "id": "[parameters('workflows_OracleFusionImportOperations_externalid')]"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {
+                                        "Scope_Get_File": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "Scope"
+                                }
+                            },
+                            "runAfter": {
+                                "Set_variable_vParameterList": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Scope"
+                        },
+                        "Set_variable_vParameterList": {
+                            "runAfter": {
+                                "Initialize_variable_vParameterList": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                                "name": "vParameterList",
+                                "value": "@triggerBody()?['originatingSource']"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_externalid')]",
+                                "connectionName": "azurefile",
+                                "id": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/providers/Microsoft.Web/locations/australiaeast/managedApis/azurefile"
+                            },
+                            "office365": {
+                                "connectionId": "[parameters('connections_office365_externalid')]",
+                                "connectionName": "office365",
+                                "id": "/subscriptions/0a97d976-7f7a-439d-abb3-de2dbe2d9475/providers/Microsoft.Web/locations/australiaeast/managedApis/office365"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
