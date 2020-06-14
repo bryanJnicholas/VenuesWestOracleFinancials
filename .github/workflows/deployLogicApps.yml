@@ -1,0 +1,32 @@
+# 14/6/2020 - Bryan Nicholas - Deploy Logic Apps for OracleFinancialServices
+
+name: Deploy ARM Template Logic Apps
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "triggerFile.txt"
+
+jobs:
+  deploy-storage-account-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@master
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+
+      - name: Deploy ARM Template
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az deployment group create \
+            --resource-group bnprojectbn \
+            --template-file ./4.LogicApps/azuredeploy.json \
+            --parameters ./4.LogicApps/parameters.dev.json
