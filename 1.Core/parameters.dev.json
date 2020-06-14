@@ -5,6 +5,9 @@
         "fileShareStorageAccountName": {
             "value": "bnsysdevoraclefinancials"
         },
+		"vaults_VW_SYD_DEV_KV_INTMW_name": {
+            "value": "BN-SYD-DEV-KV-INTMW"
+        },
 		"environmentTag": {
             "value": "dev"
         },

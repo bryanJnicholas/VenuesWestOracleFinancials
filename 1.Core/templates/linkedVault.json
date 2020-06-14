@@ -1,0 +1,70 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"vaults_VW_SYD_DEV_KV_INTMW_name": {
+		"type": "string",
+		"defaultValue": "SetInParameterfile"
+		},
+		"environmentTag": {
+		"type": "string",
+	    "allowedValues": [
+                "prd",
+                "uat",
+                "dev"
+            ],
+		"defaultValue": "dev"
+		}
+	},
+  
+    "variables": {},
+      "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('vaults_VW_SYD_DEV_KV_INTMW_name')]",
+            "location": "australiaeast",
+            "tags": {
+                "Environment": "[parameters('environmentTag')]",
+                "Project": "IntegrationMiddleware"
+            },
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "standard"
+                },
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": true
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('vaults_VW_SYD_DEV_KV_INTMW_name'), '/VW-OracleFusionServiceAccount')]",
+            "location": "australiaeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_VW_SYD_DEV_KV_INTMW_name'))]"
+            ],
+            "properties": {
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('vaults_VW_SYD_DEV_KV_INTMW_name'), '/VW-OracleFusionServiceAccountPassword')]",
+            "location": "australiaeast",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_VW_SYD_DEV_KV_INTMW_name'))]"
+            ],
+            "properties": {
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        }
+    ]
+}
