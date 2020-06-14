@@ -2,21 +2,24 @@
 	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"fileShareStorageAccountName": {"type": "string"},
-		"location":{"type": "string"},
-		"apiManagementServiceName": {"type": "string"},
+        "subscriptionID": {"type": "string"},
+        "resourceGroup": {"type": "string"},
+		"workflows_FinanceGLImportOperations_name": {"type": "string"},
+		"workflows_OracleFusionImportOperations_externalid": {"type": "string"},
+		"connections_azurefile_externalid": {"type": "string"},
+		"connections_office365_externalid": {"type": "string"},	
 		"environmentTag": {"type": "string"},
 		"templateBaseURL": {"type": "string"}
 	},
 	"variables": {
-		"storageAccountTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedStorageAccount.json')]",
+		"FinanceGLImportOperationsTemplateLink": "[concat(parameters('templateBaseURL'),'/4.LogicApps/templates/linkedLogicAppFinanceGLImportOperations.json')]",
 		"vaultTemplateLink": "[concat(parameters('templateBaseURL'),'/1.Core/templates/linkedVault.json')]"
 
 	},
 	"resources": 
 		[
 		{
-		"name": "storageAccountTemplate",
+		"name": "logicAppFinanceGLImportOperationsTemplate",
 		"apiVersion": "2019-10-01",
 		"type": "Microsoft.Resources/deployments",
 		"properties": 
@@ -24,11 +27,15 @@
 			"mode": "Incremental",
 			"templateLink": 
 				{
-				"uri": "[variables('storageAccountTemplateLink')]",
+				"uri": "[variables('FinanceGLImportOperationsTemplateLink')]",
 				"contentVersion": "1.0.0.0"
 				},
 			"parameters": 
-				{"fileShareStorageAccountName":	{"value": "[parameters('fileShareStorageAccountName')]"},
+				{
+				"workflows_FinanceGLImportOperations_name":	{"value": "[parameters('workflows_FinanceGLImportOperations_name')]"},
+				"workflows_OracleFusionImportOperations_externalid":	{"value": "[parameters('workflows_OracleFusionImportOperations_externalid')]"},			
+				"connections_azurefile_externalid":	{"value": "[parameters('connections_azurefile_externalid')]"},				
+				"connections_office365_externalid":	{"value": "[parameters('connections_office365_externalid')]"},
 				"environmentTag": {"value": "[parameters('environmentTag')]"}
 				}
 			}

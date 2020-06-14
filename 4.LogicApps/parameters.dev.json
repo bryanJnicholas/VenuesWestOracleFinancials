@@ -2,9 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "fileShareStorageAccountName": {"value": "bnsysdevoraclefinancials"},
-		"location":{"value": "australiaeast"},
-		"apiManagementServiceName": {"value": "VW-SYD-DEV-APIM-AIS"},
+        "subscriptionID": {"value": "cbd62ea6-dd40-4f50-9260-082f4ceced1e"},
+        "resourceGroup": {"value": "bnprojectbn"},
+		"workflows_FinanceGLImportOperations_name": {"value": "FinanceGLImportOperations"},
+		"workflows_OracleFusionImportOperations_externalid": {"value":"[concat('/subscriptions/',[parameter('subscriptionID')],'/resourceGroups/',[parameter('resourceGroup')],'/providers/Microsoft.Logic/workflows/OracleFusionImportOperations')]"},
+		"connections_azurefile_externalid": {"value": "[concat('/subscriptions/',[parameter('subscriptionID')],'/resourceGroups/',[parameter('resourceGroup')],'/providers/Microsoft.Web/connections/azurefile')]"},
+		"connections_office365_externalid": {"value": "[concat('/subscriptions/',[parameter('subscriptionID')],'/resourceGroups/',[parameter('resourceGroup)],'/providers/Microsoft.Web/connections/office365')]"},
 		"environmentTag": {"value": "dev"},
 		"templateBaseURL": {"value": "https://raw.githubusercontent.com/bryanJnicholas/VenuesWestOracleFinancials/master"}
     }
