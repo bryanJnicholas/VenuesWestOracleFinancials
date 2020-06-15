@@ -1,0 +1,15 @@
+{
+  "scriptFile" : "../oracle-generic-soap-request-0.0.1-SNAPSHOT.jar",
+  "entryPoint" : "au.com.venueswest.azure.functions.GenericSoapRequest.run",
+  "bindings" : [ {
+    "type" : "httpTrigger",
+    "direction" : "in",
+    "name" : "req",
+    "methods" : [ "POST" ],
+    "authLevel" : "ANONYMOUS"
+  }, {
+    "type" : "http",
+    "direction" : "out",
+    "name" : "$return"
+  } ]
+}
